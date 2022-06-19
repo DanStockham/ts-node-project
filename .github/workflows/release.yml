@@ -63,10 +63,10 @@ jobs:
         echo "CommitDate: ${{ steps.gitversion.outputs.commitDate }}"
 
     - name: Restore nuget with dotnet
-      run: dotnet restore TypescriptNodeScaffolder/TypescriptNodeScaffolder.sln
+      run: dotnet restore TypescriptNodeScaffolder.sln
     
     - name: dotnet tests
-      run: dotnet test TypescriptNodeScaffolder/TypescriptNodeScaffolder.sln /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }}
+      run: dotnet test TypescriptNodeScaffolder.sln /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }}
 
     - name: dotnet publish 
       run: dotnet publish -r linux-x64 -p:PublishSingleFile=true -c Release /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }} --self-contained true -o ./ts-node-project
