@@ -74,15 +74,15 @@ jobs:
       run: dotnet publish -r linux-x64 -p:PublishSingleFile=true -c Release /p:AssemblyVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:FileVersion=${{ steps.gitversion.outputs.assemblySemFileVer }} /p:InformationalVersion=${{ steps.gitversion.outputs.Sha }} --self-contained true -o ./ts-node-project
 
     - name: Compress release for upload
-      run: zip -9 -y -r -q ts-node-project-${{ steps.gitversion.outputs.fullSemVe }}.zip ts-node-project/
+      run: zip -9 -y -r -q ts-node-project-${{ steps.gitversion.outputs.fullSemVer }}.zip ts-node-project/
 
     - name: Upload server binaries to release
       
       uses: svenstaro/upload-release-action@v1-release
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: server.7z
-        asset_name: Server.7z
+        file: ts-node-project-${{ steps.gitversion.outputs.fullSemVer }}.zip
+        asset_name: ts-node-project-${{ steps.gitversion.outputs.fullSemVer }}.zip
         tag: "${{ steps.gitversion.outputs.fullSemVer }}"
         overwrite: true
 
@@ -91,8 +91,8 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        tag: "${{ steps.gitversion.outputs.fullSemVe }}"
-        name: "ts-node-project-${{ steps.gitversion.outputs.fullSemVe }}"
-        file: ts-node-project-${{ steps.gitversion.outputs.fullSemVe }}.zip
-        asset_name: ts-node-project-${{ steps.gitversion.outputs.fullSemVe }}.zip
+        tag: "${{ steps.gitversion.outputs.fullSemVer }}"
+        name: "ts-node-project-${{ steps.gitversion.outputs.fullSemVer }}"
+        file: ts-node-project-${{ steps.gitversion.outputs.fullSemVer }}.zip
+        asset_name: ts-node-project-${{ steps.gitversion.outputs.fullSemVer }}.zip
         overwrite: true
